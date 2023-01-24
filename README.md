@@ -61,3 +61,16 @@ https://kafka.apache.org/downloads
 
 https://gradle.org/releases/  
 1. gradle 7.6 install
+
+## TEST
+1. http://localhost:8070/order/create [POST]
+```
+{
+    "orderId": "u100023123",
+    "userId": "TEST",
+    "productId": "BASDFASDFASDFASFD",
+    "productPrice": 1000.00   
+}
+
+2. http://localhost:8070/order [GET]
+```
