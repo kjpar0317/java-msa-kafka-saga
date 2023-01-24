@@ -59,3 +59,6 @@ https://kafka.apache.org/downloads
 [[https://www.graalvm.org/  ](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.3.0)](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.3.0)  
 
 1. jdk19 install
+
+https://gradle.org/releases/  
+2. grdle 7.6 install
