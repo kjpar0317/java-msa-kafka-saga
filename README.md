@@ -2,7 +2,7 @@
 springboot(3.X) netflix-cloud kafka saga  
 in-text citations: https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/
 
-[<img src="https://www.vinsguru.com/wp-content/uploads/2022/01/Add-a-little-bit-of-body-text.png">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
+[<img src="[https://www.vinsguru.com/wp-content/uploads/2022/01/Add-a-little-bit-of-body-text.png](https://www.vinsguru.com/wp-content/uploads/2022/02/Add-a-little-bit-of-body-text-1.png)">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
 
 ## A Simple Transaction:
 Let’s assume that our business rule says, when a user places an order, order will be fulfilled if the product’s price is within the user’s credit limit/balance & the inventory is available for the product. Otherwise it will not be fulfilled. It looks really simple. This is very easy to implement in a monolith application. The entire workflow can be considered as 1 single transaction. It is easy to commit / rollback when everything is in a single DB. With distributed systems with multiple databases, It is going to be very complex! Let’s look at our architecture first to see how to implement this.
