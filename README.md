@@ -20,6 +20,7 @@ When the order-service receives the request for the new order, It has to check w
 ## Saga Pattern:
 Event Sourcing:
 In this approach every change to the state of an application is captured as an event. This event is stored in the database/event store (for tracking purposes) and is also published in the event-bus for other parties to consume.
+[<img src="https://www.vinsguru.com/wp-content/uploads/2020/04/Screenshot-from-2020-07-11-21-38-45.png">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
 
 The order-service receives a command to create a new order. This request is processed and raised as an order-created event. Couple of things to note here.
 
