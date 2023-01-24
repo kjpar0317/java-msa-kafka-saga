@@ -60,4 +60,4 @@ https://kafka.apache.org/downloads
 1. jdk19 install
 
 https://gradle.org/releases/  
-1. grdle 7.6 install
+1. gradle 7.6 install
