@@ -46,3 +46,12 @@ It places an order request in the DB in the ORDER_CREATED state and raises an ev
 payment-service listens to the event, confirms about the credit reservation
 inventory-service also listens to the order-event and conforms the inventory reservation
 order-service fulfills order or rejects the order based on the credit & inventory reservation status.
+
+
+## INSTALL
+https://kafka.apache.org/downloads
+  
+1. zookeeper run  
+{{kafka folder}}\bin\windows\zookeeper-server-start.bat config\zookeeper.properties  
+2. kafka run
+{{kafka folder}}\bin\windows\kafka-server-start.bat config\server.properties
