@@ -2,7 +2,7 @@
 springboot(3.X) netflix-cloud kafka saga  
 in-text citations: https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/
 
-[<img src="https://www.vinsguru.com/wp-content/uploads/2022/01/Add-a-little-bit-of-body-text.png">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
+[<img src="[https://www.vinsguru.com/wp-content/uploads/2022/01/Add-a-little-bit-of-body-text.png](https://www.vinsguru.com/wp-content/uploads/2022/02/Add-a-little-bit-of-body-text-1.png)">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
 
 ## A Simple Transaction:
 Let’s assume that our business rule says, when a user places an order, order will be fulfilled if the product’s price is within the user’s credit limit/balance & the inventory is available for the product. Otherwise it will not be fulfilled. It looks really simple. This is very easy to implement in a monolith application. The entire workflow can be considered as 1 single transaction. It is easy to commit / rollback when everything is in a single DB. With distributed systems with multiple databases, It is going to be very complex! Let’s look at our architecture first to see how to implement this.
@@ -15,11 +15,11 @@ order-service
 payment-service
 inventory-service
 When the order-service receives the request for the new order, It has to check with the payment-service & inventory-service. We deduct the payment, inventory and fulfill the order finally! What will happen if we deducted payment but if inventory is not available? How to roll back? It is difficult when multiple databases are involved.
+[<img src="https://www.vinsguru.com/wp-content/uploads/2020/08/Screenshot-from-2020-08-11-16-44-17.png">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
 
 ## Saga Pattern:
 Event Sourcing:
 In this approach every change to the state of an application is captured as an event. This event is stored in the database/event store (for tracking purposes) and is also published in the event-bus for other parties to consume.
-[<img src="[<img src="https://www.vinsguru.com/wp-content/uploads/2022/01/Add-a-little-bit-of-body-text.png">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)">](https://www.vinsguru.com/orchestration-saga-pattern-with-spring-boot/)
 
 The order-service receives a command to create a new order. This request is processed and raised as an order-created event. Couple of things to note here.
 
