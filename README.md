@@ -53,5 +53,5 @@ https://kafka.apache.org/downloads
   
 1. zookeeper run  
 {{kafka folder}}\bin\windows\zookeeper-server-start.bat config\zookeeper.properties  
-2. kafka run
+2. kafka run  
 {{kafka folder}}\bin\windows\kafka-server-start.bat config\server.properties
