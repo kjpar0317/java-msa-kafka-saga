@@ -1,7 +1,7 @@
 package com.orchestration.inventory.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.orchestration.common.kafka.KafkaStep;
+import com.orchestration.common.kafka.KafkaStatus;
 import com.orchestration.common.model.OrderDTO;
 import com.orchestration.common.utils.ObjectMapperUtils;
 import com.orchestration.inventory.model.InventoryDTO;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,14 +22,14 @@ public class InventoryService {
         InventoryDTO inventory = repository.findById(order.getOrderId());
 
         if(order.getProductPrice() <= inventory.getAvaliableAmount()) {
-            order.setOrderStatus(KafkaStep.ACCEPT);
+            order.setStatus(KafkaStatus.ACCEPT);
             inventory.setReserveAmount(inventory.getReserveAmount() + order.getProductPrice());
             inventory.setAvaliableAmount(inventory.getAvaliableAmount() - order.getProductPrice());
             repository.save(inventory);
 
             log.info("Inventory accepted {}", inventory);
         } else {
-            order.setOrderStatus(KafkaStep.REJECT);
+            order.setStatus(KafkaStatus.REJECT);
 
             log.info("Inventory rejected {}", inventory);
         }
@@ -45,12 +44,12 @@ public class InventoryService {
     public void confirmInventory(OrderDTO order) {
         InventoryDTO inventory = repository.findById(order.getOrderId());
 
-        if(KafkaStep.COMPLETED.equals(order.getOrderStatus())) {
+        if(KafkaStatus.COMPLETED == order.getStatus()) {
             inventory.setReserveAmount(inventory.getReserveAmount() - order.getProductPrice());
             repository.save(inventory);
 
             log.info("Order complete for inventory {}", inventory);
-        } else if(KafkaStep.ROLLBACK.equals(order.getOrderStatus())) {
+        } else if(KafkaStatus.ROLLBACK == order.getStatus()) {
             if(inventory.getReserveAmount() != 0) {
                 inventory.setReserveAmount(inventory.getReserveAmount() - order.getProductPrice());
                 inventory.setAvaliableAmount(inventory.getAvaliableAmount() + order.getProductPrice());

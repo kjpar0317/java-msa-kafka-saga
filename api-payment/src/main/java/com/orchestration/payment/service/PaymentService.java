@@ -1,7 +1,7 @@
 package com.orchestration.payment.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.orchestration.common.kafka.KafkaStep;
+import com.orchestration.common.kafka.KafkaStatus;
 import com.orchestration.common.model.OrderDTO;
 import com.orchestration.common.utils.ObjectMapperUtils;
 import com.orchestration.payment.model.PaymentDTO;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,14 +22,14 @@ public class PaymentService {
         PaymentDTO payment = paymentRepository.findById(order.getOrderId());
 
         if(order.getProductPrice() <= payment.getAvaliableAmount()) {
-            order.setOrderStatus(KafkaStep.ACCEPT);
+            order.setStatus(KafkaStatus.ACCEPT);
             payment.setReserveAmount(payment.getReserveAmount() + order.getProductPrice());
             payment.setAvaliableAmount(payment.getAvaliableAmount() - order.getProductPrice());
             paymentRepository.save(payment);
 
             log.info("Payment accepted {}", payment);
         } else {
-            order.setOrderStatus(KafkaStep.REJECT);
+            order.setStatus(KafkaStatus.REJECT);
 
             log.info("Payment rejected {}", payment);
         }
@@ -48,12 +47,12 @@ public class PaymentService {
     public void completePayment(OrderDTO order) {
         PaymentDTO payment = paymentRepository.findById(order.getOrderId());
 
-        if(KafkaStep.COMPLETED.equals(order.getOrderStatus())) {
+        if(KafkaStatus.COMPLETED == order.getStatus()) {
             payment.setReserveAmount(payment.getReserveAmount() - order.getProductPrice());
             paymentRepository.save(payment);
 
             log.info("Order complete for payment {}", payment);
-        } else if(KafkaStep.ROLLBACK.equals(order.getOrderStatus())) {
+        } else if(KafkaStatus.ROLLBACK == order.getStatus()) {
             if(payment.getReserveAmount() != 0) {
                 payment.setReserveAmount(payment.getReserveAmount() - order.getProductPrice());
                 payment.setAvaliableAmount(payment.getAvaliableAmount() + order.getProductPrice());

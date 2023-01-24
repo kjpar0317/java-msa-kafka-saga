@@ -1,7 +1,7 @@
 package com.orchestration.payment.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.orchestration.common.kafka.KafkaStep;
+import com.orchestration.common.kafka.KafkaStatus;
 import com.orchestration.common.model.OrderDTO;
 import com.orchestration.common.utils.ObjectMapperUtils;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class KafkaConsumer {
 
         log.info("Order received {}", order);
 
-        if(KafkaStep.NEW.equals(order.getOrderStatus())) {
+        if(KafkaStatus.NEW == order.getStatus()) {
             service.reservePayment(order);
         } else {
             service.completePayment(order);

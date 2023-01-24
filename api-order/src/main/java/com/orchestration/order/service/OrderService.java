@@ -1,7 +1,7 @@
 package com.orchestration.order.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.orchestration.common.kafka.KafkaStep;
+import com.orchestration.common.kafka.KafkaStatus;
 import com.orchestration.common.model.OrderDTO;
 import com.orchestration.common.utils.ObjectMapperUtils;
 import com.orchestration.order.repository.OrderRepository;
@@ -23,7 +23,7 @@ public class OrderService {
     public Mono<OrderDTO> createOrder(OrderDTO order) {
         try {
             // New Order Status
-            order.setOrderStatus(KafkaStep.NEW);
+            order.setStatus(KafkaStatus.NEW);
 
             String message = ObjectMapperUtils.getInstance().writeValueAsString(order);
             orderRepository.save(order);

@@ -1,7 +1,7 @@
 package com.orchestration.inventory.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.orchestration.common.kafka.KafkaStep;
+import com.orchestration.common.kafka.KafkaStatus;
 import com.orchestration.common.model.OrderDTO;
 import com.orchestration.common.utils.ObjectMapperUtils;
 import com.orchestration.inventory.service.InventoryService;
@@ -23,7 +23,7 @@ public class KafkaConsumer {
 
         log.info("Order received {}", order);
 
-        if(KafkaStep.NEW.equals(order.getOrderStatus())) {
+        if(KafkaStatus.NEW == order.getStatus()) {
             service.reserveInventory(order);
         } else {
             service.confirmInventory(order);

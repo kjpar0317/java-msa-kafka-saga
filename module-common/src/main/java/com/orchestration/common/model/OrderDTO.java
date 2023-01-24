@@ -1,5 +1,6 @@
 package com.orchestration.common.model;
 
+import com.orchestration.common.kafka.KafkaStatus;
 import lombok.*;
 
 @Data
@@ -9,7 +10,7 @@ public class OrderDTO {
     private String orderId;
     private String userId;
     private String productId;
-    private String orderStatus;
     private String srcService;
     private Double productPrice;
+    private KafkaStatus status;
 }

@@ -1,7 +1,7 @@
 package com.orchestration.order.consumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.orchestration.common.kafka.KafkaStep;
+import com.orchestration.common.kafka.KafkaStatus;
 import com.orchestration.common.model.OrderDTO;
 import com.orchestration.common.utils.ObjectMapperUtils;
 import com.orchestration.order.repository.OrderRepository;
@@ -10,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ObjectUtils;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,24 +24,24 @@ public class KafkaConsumer {
 
         log.info("Order result received {}", order);
 
-        if (KafkaStep.REJECT.equals(order.getOrderStatus())) {
-            order.setOrderStatus(KafkaStep.ROLLBACK);
+        if (KafkaStatus.REJECT == order.getStatus()) {
+            order.setStatus(KafkaStatus.ROLLBACK);
             String newMessage = ObjectMapperUtils.getInstance().writeValueAsString(order);
-            order.setOrderStatus(KafkaStep.CANCELED);
+            order.setStatus(KafkaStatus.CANCELED);
             repository.save(order);
             template.send("order-topic", order.getOrderId(), newMessage);
 
             log.info("Order will be cancelled {}", order);
-        } else if (KafkaStep.ACCEPT.equals(order.getOrderStatus())) {
+        } else if (KafkaStatus.ACCEPT == order.getStatus()) {
             OrderDTO currentOrder = repository.findById(order.getOrderId());
 
-            if(KafkaStep.NEW.equals(currentOrder.getOrderStatus())) {
-                order.setOrderStatus(KafkaStep.WAITING);
+            if(KafkaStatus.NEW == currentOrder.getStatus()) {
+                order.setStatus(KafkaStatus.WAITING);
                 repository.save(order);
 
                 log.info("Order is waiting {}", order);
-            } else if(KafkaStep.WAITING.equals(currentOrder.getOrderStatus())) {
-                order.setOrderStatus(KafkaStep.COMPLETED);
+            } else if(KafkaStatus.WAITING == currentOrder.getStatus()) {
+                order.setStatus(KafkaStatus.COMPLETED);
                 repository.save(order);
                 String newMessage = ObjectMapperUtils.getInstance().writeValueAsString(order);
                 template.send("order-topic", order.getOrderId(), newMessage);
