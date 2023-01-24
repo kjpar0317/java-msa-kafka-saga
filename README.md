@@ -71,6 +71,6 @@ https://gradle.org/releases/
     "productId": "BASDFASDFASDFASFD",
     "productPrice": 1000.00   
 }
-
-2. http://localhost:8070/order [GET]
 ```
+2. http://localhost:8070/order [GET]
+
