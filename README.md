@@ -54,4 +54,8 @@ https://kafka.apache.org/downloads
 1. zookeeper run  
 {{kafka folder}}\bin\windows\zookeeper-server-start.bat config\zookeeper.properties  
 2. kafka run  
-{{kafka folder}}\bin\windows\kafka-server-start.bat config\server.properties
+{{kafka folder}}\bin\windows\kafka-server-start.bat config\server.properties  
+  
+[[https://www.graalvm.org/  ](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.3.0)](https://github.com/graalvm/graalvm-ce-builds/releases/tag/vm-22.3.0)  
+
+1. jdk19 install
