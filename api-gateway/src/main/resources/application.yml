@@ -1,0 +1,22 @@
+server:
+  port: 8761
+
+spring:
+  cloud:
+    config:
+      import-check:
+        enabled: false
+
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    enableSelfPreservation: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

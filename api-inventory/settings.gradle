@@ -1,0 +1,4 @@
+rootProject.name = 'java-msa-kafka-saga'
+
+include ':module-common'
+project(':module-common').projectDir = new File('../module-common')
