@@ -23,6 +23,7 @@ eureka:
       enabled: true
   instance:
     preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 3
 
 management:
   endpoints:
