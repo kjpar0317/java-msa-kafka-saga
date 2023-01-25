@@ -24,6 +24,7 @@ eureka:
   instance:
     preferIpAddress: true
     leaseRenewalIntervalInSeconds: 3
+    leaseExpirationDurationInSeconds: 5
 
 management:
   endpoints:
