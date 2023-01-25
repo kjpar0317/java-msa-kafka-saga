@@ -8,6 +8,8 @@ spring:
         enabled: false
 
 eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 3
   client:
     registerWithEureka: false
     fetchRegistry: false
